@@ -16,11 +16,11 @@ SETP 7
 * Add iptables rule if you need
 
 NOTICE: My Ansible version is 2.8.10, my AWX version is 15.0. My Terraform version is 1.9.8. It is possible that certain modules and plugins are compatible with this version.
-
+-
 Suggest: Certain tasks were written using the shell module. For instance, the iptables playbook utilizes the shell module, but I recommend utilizing the Ansible iptables module instead.
-
+-
 Suggest: To restart your service after copying configurations using Ansible, I recommend employing Ansible handlers and the notify mechanism.
-
+-
 
 ![Migrate](https://github.com/user-attachments/assets/4511a6ac-11d1-4bb9-bbfc-d637e50242c2)
 

@@ -1,0 +1,65 @@
+- name: Main Playbook to run other playbooks
+  hosts: "{{ target_host }}"
+  gather_facts: no
+  become: yes
+  vars_prompt:
+    - name: target_host
+      prompt: "Please enter Server IP that you want migrate"
+      private: no
+
+    - name: source_ip
+      prompt: "Enter the IP address of the Source server (Can be Master or Backup Node)"
+      private: no
+
+    - name: nginx_config_path
+      prompt: "Where is NGINX configuration Path"
+      private: no 
+
+    - name: zabbix_config_path
+      prompt: "Where is ZABBIX configuration Path"
+      private: no          
+
+    - name: existing_vm_name
+      prompt: "Enter the name of the existing VM for migration to RedHat"
+      private: no 
+
+    - name: new_os_hostname
+      prompt: "Enter the hostname for the new VM (e.g., plva123)"
+      private: no 
+
+    - name: new_vm_ip
+      prompt: "Enter the IP address for the new VM"
+      private: no 
+
+    - name: new_vm_gateway
+      prompt: "Enter the gateway for the new VM"
+      private: no 
+
+    - name: new_vm_netmask
+      prompt: "Enter the netmask for the new VM (e.g., 24)"
+      private: no 
+
+    - name: new_vm_tags_for_backup
+      prompt: "Please Enter appropriate tag for Backup (FR-Linux-Daily OR FR-Linux-Every 3 days)"
+      private: no 
+
+    - name: new_vm_vlan
+      prompt: "Please Enter Your VLAN Base On Exist Machine (For example 'PVLAN 1202,1387-L')"
+      private: no 
+ 
+
+  tasks:
+    - name: fetch-zabbix-agent-configuration
+      include_tasks: fetch-zabbix-agent-configuration.yaml
+
+    - name: fetch-keepalived-configuration
+      include_tasks: fetch-keepalived-configuration.yaml
+
+    - name: fetch-lsyncd-configuration
+      include_tasks: fetch-lsyncd-configuration.yaml
+
+    - name: fetch-nginx-lb-configuration
+      include_tasks: fetch-nginx-lb-configuration.yaml
+
+    - name: terraform-migrate-vm
+      include_tasks: terraform-migrate-vm.yaml

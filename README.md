@@ -15,7 +15,7 @@ STEP 6
 SETP 7
 * Add iptables rule if you need
 
-NOTICE: My Ansible version is 2.8.10, my AWX version is 15.0. My Terraform version is 1.9.8. It is possible that certain modules and plugins are compatible with this version.
+NOTICE: My Ansible version is 2.10.8, my AWX version is 15.0. My Terraform version is 1.9.8. It is possible that certain modules and plugins are compatible with this version.
 -
 Suggest: Certain tasks were written using the shell module. For instance, the iptables playbook utilizes the shell module, but I recommend utilizing the Ansible iptables module instead.
 -

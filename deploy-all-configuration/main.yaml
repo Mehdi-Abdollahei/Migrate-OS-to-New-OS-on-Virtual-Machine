@@ -1,0 +1,23 @@
+- name: Main Playbook to run other playbooks
+  hosts: "{{ target_host }}"
+  gather_facts: no
+  become: yes
+  vars_prompt:
+    - name: target_host
+      prompt: "Please enter Server IP that you want migrate"
+      private: no
+
+    - name: syslog_ip
+      prompt: "Enter the Syslog IP Address"
+      private: no  
+    
+    - name: lb_vip
+      prompt: "Enter the LB Virtual IP Address"
+      private: no  
+    
+  tasks: 
+    - name: copy_all_configuration
+      include_tasks: copy_all_configuration.yaml
+
+    - name: iptables-config
+      include_tasks: iptables-config.yaml

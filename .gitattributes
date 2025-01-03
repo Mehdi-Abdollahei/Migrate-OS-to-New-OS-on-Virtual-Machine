@@ -1,0 +1,9 @@
+# Mark HCL files
+*.tf linguist-language=HCL
+
+# Mark YAML files for Ansible
+*.yml linguist-language=Ansible
+*.yaml linguist-language=Ansible
+
+# Exclude irrelevant files from language stats (optional)
+*.log linguist-detectable=false

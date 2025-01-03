@@ -1,0 +1,20 @@
+  - name: ---- Copy keepalived.conf to /etc directory ----
+    copy:
+        src: /tmp/keepalived_configs/{{ inventory_hostname }}/keepalived.conf
+        dest: /etc/keepalived/
+        
+  - name: ---- copy lsyncd.conf.lua to /etc directory ----
+    copy:
+        src: /tmp/lsyncd_configs/{{ inventory_hostname }}/lsyncd.conf* 
+        dest: /etc/lsyncd/
+    ignore_errors: true
+
+  - name: ---- Unarchive zabbix.tar.gz to /etc directory and remove the archive ----
+    ansible.builtin.unarchive:
+        src: /tmp/zabbix_configs/{{ inventory_hostname }}/zabbix.tar.gz 
+        dest: /etc/zabbix/
+
+  - name: ---- Unarchive nginx.tar.gz to /etc directory and remove the archive ----
+    ansible.builtin.unarchive:
+        src: /tmp/nginx_configs/{{ inventory_hostname }}/nginx.tar.gz 
+        dest: /etc/nginx/

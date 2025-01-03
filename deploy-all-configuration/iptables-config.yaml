@@ -1,0 +1,8 @@
+---
+- name: Add SNAT rule with the provided IPs
+  shell: >
+    iptables -t nat -A POSTROUTING -d {{ syslog_ip  }} -j SNAT --to-source {{ lb_vip }}
+
+- name: Save iptables rules to make them persistent
+  shell: >
+    iptables-save > /etc/sysconfig/iptables

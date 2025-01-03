@@ -1,0 +1,15 @@
+- name: Apply Terraform configuration
+  command: >
+    terraform apply
+    -var "existing_vm_name={{ existing_vm_name }}"
+    -var "new_os_hostname={{ new_os_hostname }}"
+    -var "new_vm_gateway={{ new_vm_gateway }}"
+    -var "new_vm_ip={{ new_vm_ip }}"
+    -var "new_vm_netmask={{ new_vm_netmask }}"
+    -var "new_vm_tags_for_backup={{ new_vm_tags_for_backup }}"
+    -var "new_vm_vlan={{ new_vm_vlan }}"
+    -auto-approve
+  delegate_to: 172.29.130.10
+  args:
+    chdir: /opt/terraform/lb-create/
+  ignore_errors: yes

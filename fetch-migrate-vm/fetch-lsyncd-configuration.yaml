@@ -1,0 +1,30 @@
+---
+- name: Check for lsyncd configuration in /etc/lsyncd
+  find:
+    paths: /etc/lsyncd/
+    patterns: "lsyncd.conf*"
+    file_type: file
+    recurse: no
+  register: lsyncd_etc
+
+- name: Check for lsyncd configuration in /opt/lsyncd
+  find:
+    paths: /opt/lsyncd/
+    patterns: "lsyncd.conf*"
+    file_type: file
+    recurse: no
+  register: lsyncd_opt
+
+- name: Fetch archived lsyncd configuration from /etc/lsyncd if it exists
+  fetch:
+    src: /etc/lsyncd/lsyncd.conf*
+    dest: /tmp/lsyncd_configs/{{ inventory_hostname }}/
+    flat: yes
+  when: lsyncd_etc.matched > 0
+
+- name: Fetch archived lsyncd configuration from /opt/lsyncd if it exists
+  fetch:
+    src: /opt/lsyncd/lsyncd.conf*
+    dest: /tmp/lsyncd_configs/{{ inventory_hostname }}/
+    flat: yes
+  when: lsyncd_opt.matched > 0

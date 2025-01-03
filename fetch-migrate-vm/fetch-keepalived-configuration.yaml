@@ -1,0 +1,30 @@
+---
+- name: Check for keepalived configuration in /etc/keepalived
+  find:
+    paths: /etc/keepalived/
+    patterns: "keepalived.conf"
+    file_type: file
+    recurse: no
+  register: keepalived_etc
+
+- name: Check for keepalived configuration in /opt/keepalived
+  find:
+    paths: /opt/keepalived/
+    patterns: "keepalived.conf"
+    file_type: file
+    recurse: no
+  register: keepalived_opt
+
+- name: Fetch archived keepalived configuration from /etc/keepalived if it exists
+  fetch:
+    src: /etc/keepalived/keepalived.conf
+    dest: /tmp/keepalived_configs/{{ inventory_hostname }}/
+    flat: yes
+  when: keepalived_etc.matched > 0
+
+- name: Fetch archived keepalived configuration from /opt/keepalived if it exists
+  fetch:
+    src: /opt/keepalived/keepalived.conf
+    dest: /tmp/keepalived_configs/{{ inventory_hostname }}/
+    flat: yes
+  when: keepalived_opt.matched > 0

@@ -1,0 +1,20 @@
+---
+- name: Archive zabbix configuration
+  shell: >
+    tar -czf /tmp/zabbix.tar.gz -C {{ zabbix_config_path }} .
+  ignore_errors: true
+#delegate_to: "{{ source_ip }}"
+#when: zabbix_config_path is defined
+#
+- name: Fetch archived zabbix configuration
+  fetch:
+    src: /tmp/zabbix.tar.gz
+    dest: /tmp/zabbix_configs/{{ inventory_hostname }}/
+    flat: yes
+ # when: zabbix_config_path is defined
+
+#- name: Remove temporary archive
+#  file:
+#    path: /tmp/zabbix.tar.gz
+#    state: absent
+#  #when: zabbix_config_path is defined

@@ -1,0 +1,20 @@
+---
+- name: Archive nginx configuration
+  shell: >
+    tar -czf /tmp/nginx.tar.gz -C {{ nginx_config_path }} .
+  ignore_errors: true
+#delegate_to: "{{ source_ip }}"
+#when: nginx_config_path is defined
+#
+- name: Fetch archived nginx configuration
+  fetch:
+    src: /tmp/nginx.tar.gz
+    dest: /tmp/nginx_configs/{{ inventory_hostname }}/
+    flat: yes
+ # when: nginx_config_path is defined
+
+#- name: Remove temporary archive
+#  file:
+#    path: /tmp/nginx.tar.gz
+#    state: absent
+#  #when: nginx_config_path is defined
